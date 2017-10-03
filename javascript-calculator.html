@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FCC JavaScript Calculator Project</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="calculator-style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            var currentEntry = [];
+            var equation = [];
+            var inputs = [];
+            var operations = [];
+            var equals = 0;
+            var answer = undefined;
+            
+            $(document).ready(function() {
+                $("#clear button").on("click", function() {
+                    $("#equation").empty();
+                    $("#answer").empty();
+                    currentEntry = [];
+                    equation = [];
+                    inputs = [];
+                    operations = [];
+                    equals = 0;
+                    answer = undefined;
+                })
+                
+                $("#backspace button").on("click", function() {
+                    if ($("#answer").text().length === 1) {
+                        $("#answer").text(0);
+                    } else {
+                        $("#answer").text(function(_, num) {
+                            return num.slice(0, -1);
+                        });
+                    }
+                    currentEntry.pop();
+                })
+                
+                $("#one button").on("click", function() {
+                    afterEquals();
+
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(1);
+                    } else {
+                        $("#answer").append(1);
+                    }
+                    currentEntry.push(1);
+                })
+                
+                $("#two button").on("click", function() {
+                    afterEquals();
+                    
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(2);      
+                    } else {
+                        $("#answer").append(2);
+                    }
+                    currentEntry.push(2);
+                })
+
+                $("#three button").on("click", function() {
+                    afterEquals();
+    
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(3);      
+                    } else {
+                        $("#answer").append(3);
+                    }
+                    currentEntry.push(3);
+                })
+
+                $("#four button").on("click", function() {
+                    afterEquals();
+
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(4);      
+                    } else {
+                        $("#answer").append(4);
+                    }
+                    currentEntry.push(4);
+                })
+
+                $("#five button").on("click", function() {
+                    afterEquals();
+
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(5);      
+                    } else {
+                    $("#answer").append(5);
+                    }
+                    currentEntry.push(5);
+                })
+
+                $("#six button").on("click", function() {
+                    afterEquals();
+    
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(6);      
+                    } else {
+                        $("#answer").append(6);
+                    }
+                    currentEntry.push(6);
+                })
+
+                $("#seven button").on("click", function() {
+                    afterEquals();
+
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(7);      
+                    } else {
+                        $("#answer").append(7);
+                    }
+                    currentEntry.push(7);
+                })
+
+                $("#eight button").on("click", function() {
+                    afterEquals();
+    
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(8);      
+                    } else {
+                        $("#answer").append(8);
+                    }
+                    currentEntry.push(8);
+                })
+
+                $("#nine button").on("click", function() {
+                    afterEquals();
+                    
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(9);      
+                    } else {
+                        $("#answer").append(9);
+                    }
+                    currentEntry.push(9);
+                })
+
+                $("#zero button").on("click", function() {
+                    afterEquals();
+    
+                    if (isNaN(equation[-1]) && currentEntry.length === 0) {
+                        $("#answer").empty();
+                    }
+                    if ($("#answer").text() == 0) {
+                        $("#answer").text(0);
+                    } else {
+                        $("#answer").append(0);
+                    }
+                    currentEntry.push(0);
+                })
+
+                $("#decimal button").on("click", function() {
+                    if ($("#answer").text().indexOf(".") === -1 && currentEntry.indexOf(".") === -1) {
+                        if ($("#answer").text() == 0) {
+                            $("#answer").text("0.");
+                        } else {
+                        $("#answer").append(".");
+                        }
+                        currentEntry.push(".");
+                    }
+                })
+  
+                $("#negative button").on("click", function() {
+                    if ($("#answer").text().length == 0) {
+                        
+                    } else if ($("#answer").text().indexOf("-") === -1 && currentEntry.indexOf("-") === -1 && currentEntry.length > 0) {
+                        $("#answer").prepend("-");
+                        currentEntry.unshift("-");
+                    } else if (currentEntry.length > 0) {
+                        $("#answer").text(function(_, negative) {
+                            return negative.slice(1);
+                        });
+                        currentEntry.shift();
+                    }
+                })
+
+                $("#divide button").on("click", function() {
+                    operationAfterEquals();
+                    equals = 0;
+                    storeValues("/");
+                    projectToScreen();
+                })
+
+                $("#multiply button").on("click", function() {
+                    operationAfterEquals();
+                    equals = 0;
+                    storeValues("*");
+                    projectToScreen();
+                })
+
+                $("#subtract button").on("click", function() {
+                    operationAfterEquals();
+                    equals = 0;
+                    storeValues("-");
+                    projectToScreen();
+                })
+
+                $("#add button").on("click", function() {
+                    operationAfterEquals();
+                    equals = 0;
+                    storeValues("+");
+                    projectToScreen();
+                })
+
+                $("#equals button").on("click", function() {
+                    // console.log(equation + " equation");
+                    // console.log(inputs + " inputs");
+                    // console.log(operations + " operations");
+                    // console.log(currentEntry + " currentEntry");
+                    
+                    equals = 1;
+                    storeNumber();
+                    calculate();
+                    projectToScreen();
+
+                    // console.log(String(answer).length + " answer.length");
+                })
+            })
+
+
+            function storeNumber() {
+                if (currentEntry[currentEntry.length-1] == ".") {
+                    currentEntry.push(0);
+                }
+                if (currentEntry.length > 0) {
+                    var num = currentEntry.join('');
+                    equation.push(num);
+                    inputs.push(num);
+                    currentEntry = [];
+                }
+            }
+
+            function storeValues(operator) {
+                if (currentEntry.length > 0) {
+                    if (currentEntry[currentEntry.length-1] == ".") {
+                    currentEntry.push(0);
+                    }
+                    var num = currentEntry.join('');
+                    equation.push(num);
+                    inputs.push(num);
+                    
+                } else if (isNaN(equation[equation.length-1])) {
+                    equation.pop();
+                    operations.pop();
+                }
+                if (equation.length > 0) {
+                    equation.push(operator);
+                    operations.push(operator);
+                    currentEntry = [];
+                }
+            }
+
+            function projectToScreen() {
+                $("#equation").empty();
+                var screenEquation = equation.join(' ');
+                
+                if (equation.length > 12) {
+                    $("#answer").html("<br>");
+                    $("#equation").text("Number exceed");
+                } else {
+                    $("#equation").text(screenEquation);
+                }
+                
+                if (equals === 1) {
+                    if (String(answer).length > 10 || equation.length > 12) {
+                        $("#answer").html("<br>");
+                        $("#equation").text("Number exceed");
+                    } else {
+                        $("#answer").text(answer);
+                    }
+                }
+            }
+
+            function calculate() {  
+                if (isNaN(equation[equation.length-1])) {
+                    
+                } else {
+                    answer = inputs.reduce(function(a,b,c){
+                        var result = 0;
+                        switch (operations[c-1]) {
+                            case "+":
+                            result = Number(a)+Number(b);
+                            break;
+                            case "-":
+                            result = Number(a)-Number(b);
+                            break;
+                            case "*":
+                            result = Number(a)*Number(b);
+                            break;
+                            case "/":
+                            result = Number(a)/Number(b);
+                        }
+                    return result;
+                    });
+                }
+            }
+
+            function afterEquals() {
+                if (equals === 1) {
+                    equation = [];
+                    inputs = [];
+                    operations = [];
+                }
+            }
+
+            function operationAfterEquals() {
+                if (equals === 1) {
+                    afterEquals();
+                    currentEntry.push(answer);    
+                }
+            }
+        </script>
+    </head>
+
+<body>
+    
+</body>
+</html>
