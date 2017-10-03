@@ -1,0 +1,88 @@
+body {
+    background: black;
+}
+  
+#background {
+    margin: 50px auto;  
+}
+  
+#calculator {
+    padding: 30px;
+    background: #ffb5b1;
+    margin: auto;
+    width: 450px;
+    height: 600px;
+    position: relative;
+    border-radius: 20px;
+}
+  
+#screen {
+    padding: 20px;
+    background: #c9adb4;
+    position: relative;
+    margin: auto auto 10px auto;
+    height: 150px;
+    border-radius: 10px;
+}
+  
+#clear, #divide, #multiply, #seven, #eight, #nine, #four, #five, #six, #one, #two, #three, #zero, #decimal, #negative {
+    opacity: 1;
+    height: 70px;
+    width: 90px;
+    display: inline-block;
+    position: relative;
+    margin: auto 6px auto 0;
+}
+  
+#backspace, #subtract, #add{
+    opacity: 1;
+    height: 70px;
+    width: 90px;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+}
+  
+#equals {
+    opacity: 1;
+    height: 146px;
+    width: 90px;
+    position: absolute;
+    display: inline-block;
+    margin: 0;
+}
+  
+.button {
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    width: 90px;
+    border-radius: 5px;
+  /*   background: #336699; */
+    background: #a0707d;
+    font-size: 36px;
+    color: white;
+}
+  
+.big {
+    height: 146px;
+}
+  
+#equation, #answer {
+    text-align: right;
+    display: block;
+    margin-top: -15px;
+}
+  
+#answer {
+    font-size: 60px;
+}
+  
+#equation {
+    font-size: 40px;
+}
